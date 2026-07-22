@@ -156,9 +156,50 @@
 
     <!-- ADMIN -->
     <main id="view-admin" class="view-section" style="display:none;">
-      <h2 class="section-title">⚙️ Administración</h2>
-      <p>Módulo de edición de productos disponible para Dueño.</p>
+      <h2 class="section-title">⚙️ Administración de Productos</h2>
+      
+      <div style="background:white; padding:15px; border-radius:12px; margin-bottom:20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+        <h4 id="admin-form-title" style="color:var(--primary); margin-bottom:10px;">➕ Agregar Nuevo Producto</h4>
+        <input type="hidden" id="prod-edit-id">
+        
+        <div class="form-group">
+          <label>Categoría:</label>
+          <select id="prod-category" class="form-control">
+            <option value="crepasWaffles">Crepas & Waffles</option>
+            <option value="frappes">Frappés</option>
+            <option value="fresasCrema">Fresas con Crema</option>
+            <option value="otros">Snacks & Bebidas</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Nombre del Producto:</label>
+          <input type="text" id="prod-name" class="form-control" placeholder="Ej. Crepa Nutella Nut" required>
+        </div>
+
+        <div class="form-group">
+          <label>Precio ($):</label>
+          <input type="number" id="prod-price" class="form-control" placeholder="70" required>
+        </div>
+
+        <div class="form-group">
+          <label>Imagen del Producto:</label>
+          <input type="file" id="prod-file" class="form-control" accept="image/*" onchange="convertImageToBase64()" style="margin-bottom:8px;">
+          <small style="color:#666; display:block; margin-bottom:5px;">O pega un enlace/URL directo:</small>
+          <input type="text" id="prod-img" class="form-control" placeholder="https://...">
+        </div>
+
+
+        <div style="display:flex; gap:10px; margin-top:10px;">
+          <button onclick="saveAdminProduct()" class="btn-primary">Guardar Producto</button>
+          <button id="btn-cancel-edit" onclick="resetAdminForm()" class="btn-secondary" style="display:none;">Cancelar</button>
+        </div>
+      </div>
+
+      <h4 style="margin-bottom:10px;">📦 Catálogo de Productos</h4>
+      <div id="admin-products-list" style="display:flex; flex-direction:column; gap:8px;"></div>
     </main>
+
 
   </div>
 
