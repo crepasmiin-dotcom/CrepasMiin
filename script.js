@@ -1,615 +1,770 @@
-// MENU POR DEFECTO
+// ==========================================
+// 1. ESTADO GLOBAL Y MENÚ POR DEFECTO COMPLETO
+// ==========================================
+
 const DEFAULT_MENU = {
- crepasWaffles: [
- { id: 'crepa_dulce', nombre: 'Crepa Dulce', precio: 70, img: 'https://images.unsplash.com/photo-1519676867240-f03562e64548?w=300&auto=format&fit=crop', customizable: 'dulce' },
- { id: 'waffle_dulce', nombre: 'Waffle Dulce', precio: 70, img: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=300&auto=format&fit=crop', customizable: 'dulce' },
- { id: 'crepa_salada_pepperoni', nombre: 'Crepa Pepperoni', precio: 80, img: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=300&auto=format&fit=crop' },
- { id: 'crepa_salada_hawaiiana', nombre: 'Crepa Hawaiiana', precio: 80, img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300&auto=format&fit=crop' }
- ],
- frappes: [
- { id: 'f_frappuccino', nombre: 'Frappuccino', precio: 70, img: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300&auto=format&fit=crop' },
- { id: 'f_moka', nombre: 'Frappé Moka', precio: 70, img: 'https://images.unsplash.com/photo-1579888926999-291732d84793?w=300&auto=format&fit=crop' },
- { id: 'f_oreo', nombre: 'Frappé Oreo', precio: 70, img: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=300&auto=format&fit=crop' },
- { id: 'f_fresas_crema', nombre: 'Frappé Fresas c/ Crema', precio: 70, img: 'https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=300&auto=format&fit=crop' }
- ],
- fresasCrema: [
- { id: 'fresas_chico', nombre: 'Fresas Chica (3 Toppings)', precio: 70, img: 'https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=300&auto=format&fit=crop', customizable: 'fresas', maxToppings: 3 },
- { id: 'fresas_grande', nombre: 'Fresas Grande (4 Toppings)', precio: 90, img: 'https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=300&auto=format&fit=crop', customizable: 'fresas', maxToppings: 4 }
- ],
- otros: [
- { id: 'o_maruchan', nombre: 'Maruchan Piquín', precio: 30, img: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&auto=format&fit=crop' },
- { id: 'o_gomiboing', nombre: 'GomiBoing Mango', precio: 50, img: 'https://images.unsplash.com/photo-1546173159-315724a31696?w=300&auto=format&fit=crop' }
- ]
+  crepasWaffles: [
+    {
+      id: "cw1",
+      name: "Crepa / Waffle Dulce (4 Ingredientes)",
+      price: 70,
+      img: "https://images.unsplash.com/photo-1519676867240-f03562e64548?w=300",
+      customizable: true,
+      options: [
+        "Base Nutella", "Base Queso Philadelphia", "Base Cajeta", "Base Mermelada Fresa", "Base Mermelada Zarzamora",
+        "Fruta Fresa", "Fruta Plátano", "Fruta Durazno",
+        "Topping Hersheys", "Topping Lechera", "Topping Bombones", "Topping Oreo", "Topping Nuez", "Topping Choco Krispis", "Topping Froot Loops", "Topping Chispas Chocolate"
+      ]
+    },
+    {
+      id: "cw2",
+      name: "Crepa Salada Pepperoni",
+      price: 80,
+      img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300",
+      customizable: true,
+      options: ["Salsa Valentina", "Catsup", "Aderezo Chipotle"]
+    },
+    {
+      id: "cw3",
+      name: "Crepa Salada Hawaiana",
+      price: 80,
+      img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300",
+      customizable: true,
+      options: ["Salsa Valentina", "Catsup", "Aderezo Chipotle"]
+    },
+    { id: "ext1", name: "Extra: Crema Batida", price: 15, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300" },
+    { id: "ext2", name: "Extra: Helado", price: 15, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300" },
+    { id: "ext3", name: "Extra: Conejito Turín", price: 20, img: "https://images.unsplash.com/photo-1582176647440-3b137b3106e4?w=300" },
+    { id: "ext4", name: "Extra: Kinder Delice", price: 25, img: "https://images.unsplash.com/photo-1582176647440-3b137b3106e4?w=300" },
+    { id: "ext5", name: "Extra: Kinder Sorpresa", price: 30, img: "https://images.unsplash.com/photo-1582176647440-3b137b3106e4?w=300" },
+    { id: "ext6", name: "Extra: Kinder Bueno", price: 30, img: "https://images.unsplash.com/photo-1582176647440-3b137b3106e4?w=300" }
+  ],
+  frappes: [
+    { id: "fr1", name: "Frappé Frappuccino", price: 70, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300" },
+    { id: "fr2", name: "Frappé Moka", price: 70, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300" },
+    { id: "fr3", name: "Frappé Oreo", price: 70, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300" },
+    { id: "fr4", name: "Frappé Mazapán", price: 70, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300" },
+    { id: "fr5", name: "Frappé Fresas con Crema", price: 70, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300" },
+    { id: "fr6", name: "Frappé Gansito", price: 80, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300" },
+    { id: "fr7", name: "Frappé Nutella", price: 80, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300" },
+    { id: "fr8", name: "Frappé Rompope", price: 80, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300" },
+    { id: "fr9", name: "Frappé Cajeta", price: 80, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300" },
+    { id: "fr10", name: "Frappé Coco", price: 80, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300" }
+  ],
+  fresasCrema: [
+    {
+      id: "fc1",
+      name: "Fresas c/ Crema Chica (3 Toppings)",
+      price: 70,
+      img: "https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=300",
+      customizable: true,
+      options: ["Kranky", "Chocoreta", "Lunetas", "Galleta Oreo", "Galleta Triki Trakes", "Freskas", "Bubulubu", "Chispas de chocolate", "Bombones", "Nuez", "Almendra", "Granola"]
+    },
+    {
+      id: "fc2",
+      name: "Fresas c/ Crema Grande (4 Toppings)",
+      price: 90,
+      img: "https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=300",
+      customizable: true,
+      options: ["Kranky", "Chocoreta", "Lunetas", "Galleta Oreo", "Galleta Triki Trakes", "Freskas", "Bubulubu", "Chispas de chocolate", "Bombones", "Nuez", "Almendra", "Granola"]
+    }
+  ],
+  otros: [
+    { id: "gb1", name: "Gomiboing Mango", price: 50, img: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=300" },
+    { id: "gb2", name: "Gomiboing Manzana", price: 50, img: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=300" },
+    { id: "gb3", name: "Gomiboing Fresa", price: 50, img: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=300" },
+    { id: "gb4", name: "Gomiboing Guayaba", price: 50, img: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=300" },
+    { id: "gb5", name: "Gomiboing Uva", price: 50, img: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=300" },
+    { id: "mar1", name: "Maruchan Piquín", price: 30, img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300" },
+    { id: "mar2", name: "Maruchan Habanero", price: 30, img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300" },
+    { id: "cham1", name: "Chamoyada Mango", price: 70, img: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=300" },
+    { id: "caf1", name: "Té", price: 30, img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=300" },
+    { id: "caf2", name: "Café Americano", price: 40, img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=300" },
+    { id: "caf3", name: "Capuchino Clásico", price: 45, img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=300" },
+    { id: "caf4", name: "Chocolate Caliente", price: 50, img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=300" },
+    { 
+      id: "caf5", 
+      name: "Capuchino de Sabor", 
+      price: 55, 
+      img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=300",
+      customizable: true,
+      options: ["Sabor Cajeta", "Sabor Moka", "Sabor Caramelo", "Sabor Rompope"]
+    },
+    { id: "caf6", name: "Iced Coffee", price: 60, img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=300" }
+  ]
 };
 
-let MENU = JSON.parse(localStorage.getItem('pos_custom_menu')) || DEFAULT_MENU;
-let usersList = JSON.parse(localStorage.getItem('pos_users')) || [];
+// Carga Inicial del Menú y del Estado
+let MENU = JSON.parse(localStorage.getItem("pos_menu_v2")) || DEFAULT_MENU;
+let currentUser = JSON.parse(localStorage.getItem("pos_user")) || null;
+let cart = [];
+let pendingOrders = JSON.parse(localStorage.getItem("pos_orders")) || [];
+let salesHistory = JSON.parse(localStorage.getItem("pos_sales")) || [];
+let initialBoxAmount = parseFloat(localStorage.getItem("pos_initial_box")) || 0;
+let currentPayMethod = "efectivo";
+let pendingCustomItem = null;
 
-const OPTIONS_DULCES = {
- "Bases": ["Nutella", "Queso Philadelphia", "Cajeta", "Mermelada de Fresa"],
- "Frutas": ["Fresa", "Plátano", "Durazno"],
- "Toppings": ["Hersheys", "Lechera", "Bombones", "Oreo", "Nuez"]
-};
-const TOPPINGS_FRESAS = ["Kranky", "Chocoreta", "Lunetas", "Galleta Oreo", "Nuez", "Almendra"];
+// ==========================================
+// 2. INICIALIZACIÓN Y AUTENTICACIÓN
+// ==========================================
 
-let currentCart = [];
-let currentUser = null;
-let selectedPaymentMethod = 'efectivo';
-let pendingCustomProduct = null;
-let lastSale = null;
-
-let boxData = JSON.parse(localStorage.getItem('pos_box_session')) || { open: false, initial: 0 };
-let salesHistory = JSON.parse(localStorage.getItem('pos_sales')) || [];
-let pedidos = JSON.parse(localStorage.getItem('pos_pedidos')) || [];
-
-document.addEventListener('DOMContentLoaded', () => {
- renderMenu();
- renderizarComandas();
+document.addEventListener("DOMContentLoaded", () => {
+  if (currentUser) {
+    showMainApp();
+  } else {
+    document.getElementById("welcome-screen").style.display = "flex";
+  }
 });
 
-// AUTENTICACIÓN (LOGIN Y REGISTRO)
-function showAuthScreen() {
- document.getElementById('welcome-screen').style.display = 'none';
- document.getElementById('auth-screen').style.display = 'flex';
+function showAuthScreen(mode) {
+  document.getElementById("welcome-screen").style.display = "none";
+  document.getElementById("auth-screen").style.display = "flex";
+  toggleAuthMode(mode);
 }
 
 function toggleAuthMode(mode) {
- if (mode === 'register') {
- document.getElementById('login-box').style.display = 'none';
- document.getElementById('register-box').style.display = 'block';
- } else {
- document.getElementById('register-box').style.display = 'none';
- document.getElementById('login-box').style.display = 'block';
- }
-}
-
-function handleRegister(e) {
- e.preventDefault();
- const name = document.getElementById('reg-name').value;
- const email = document.getElementById('reg-email').value;
- const pass = document.getElementById('reg-pass').value;
- const role = document.getElementById('reg-role').value;
-
- const newUser = { name, email, pass, role };
- usersList.push(newUser);
- localStorage.setItem('pos_users', JSON.stringify(usersList));
-
- alert('¡Cuenta creada con éxito! Ahora inicia sesión.');
- toggleAuthMode('login');
+  if (mode === "register") {
+    document.getElementById("login-box").style.display = "none";
+    document.getElementById("register-box").style.display = "block";
+  } else {
+    document.getElementById("login-box").style.display = "block";
+    document.getElementById("register-box").style.display = "none";
+  }
 }
 
 function handleLogin(e) {
- e.preventDefault();
- const email = document.getElementById('login-email').value;
- const pass = document.getElementById('login-pass').value;
- const role = document.getElementById('login-role').value;
+  e.preventDefault();
+  const email = document.getElementById("login-email").value;
+  const role = document.getElementById("login-role").value;
+  
+  currentUser = { email, role };
+  localStorage.setItem("pos_user", JSON.stringify(currentUser));
+  
+  document.getElementById("auth-screen").style.display = "none";
+  checkInitialBox();
+}
 
- currentUser = { email, role };
- document.getElementById('auth-screen').style.display = 'none';
+function handleRegister(e) {
+  e.preventDefault();
+  const name = document.getElementById("reg-name").value;
+  const email = document.getElementById("reg-email").value;
+  const role = document.getElementById("reg-role").value;
+  
+  currentUser = { name, email, role };
+  localStorage.setItem("pos_user", JSON.stringify(currentUser));
+  
+  document.getElementById("auth-screen").style.display = "none";
+  checkInitialBox();
+}
 
- const adminBtn = document.getElementById('btn-view-admin');
- if (adminBtn) adminBtn.style.display = (role === 'owner') ? 'inline-block' : 'none';
-
- if (!boxData.open) {
- document.getElementById('open-box-modal').style.display = 'flex';
- } else {
- showMainApp();
- }
+function checkInitialBox() {
+  if (localStorage.getItem("pos_box_open") === "true") {
+    showMainApp();
+  } else {
+    document.getElementById("open-box-modal").style.display = "flex";
+  }
 }
 
 function confirmOpenBox() {
- const amount = parseFloat(document.getElementById('initial-box-amount').value) || 0;
- boxData = { open: true, initial: amount };
- localStorage.setItem('pos_box_session', JSON.stringify(boxData));
- document.getElementById('open-box-modal').style.display = 'none';
- showMainApp();
+  const amount = parseFloat(document.getElementById("initial-box-amount").value) || 0;
+  initialBoxAmount = amount;
+  localStorage.setItem("pos_initial_box", amount);
+  localStorage.setItem("pos_box_open", "true");
+  
+  document.getElementById("open-box-modal").style.display = "none";
+  showMainApp();
 }
 
 function showMainApp() {
- document.getElementById('app-main').style.display = 'flex';
- updateReportsUI();
+  document.getElementById("app-main").style.display = "block";
+  
+  // Mostrar botón de administración solo a dueños
+  if (currentUser && currentUser.role === "owner") {
+    document.getElementById("btn-view-admin").style.display = "inline-block";
+  } else {
+    document.getElementById("btn-view-admin").style.display = "none";
+  }
+
+  renderMenu();
+  renderComandas();
+  renderReports();
+  renderAdminProducts();
 }
 
 function logout() {
- currentUser = null;
- document.getElementById('app-main').style.display = 'none';
- document.getElementById('welcome-screen').style.display = 'flex';
+  localStorage.removeItem("pos_user");
+  location.reload();
 }
 
-// NAVEGACIÓN Y MENÚ
-function switchView(view) {
- ['menu', 'comandas', 'reports', 'admin'].forEach(v => {
- const el = document.getElementById(`view-${v}`);
- const btn = document.getElementById(`btn-view-${v}`);
- if (el) el.style.display = (v === view) ? 'block' : 'none';
- if (btn) btn.classList.toggle('active', v === view);
- });
- if (view === 'reports') updateReportsUI();
- if (view === 'comandas') renderizarComandas();
- if (view === 'admin') renderAdminProducts();
+// ==========================================
+// 3. VISTAS Y NAVEGACIÓN
+// ==========================================
+
+function switchView(viewName) {
+  const views = ["menu", "comandas", "reports", "admin"];
+  views.forEach(v => {
+    const el = document.getElementById(`view-${v}`);
+    const btn = document.getElementById(`btn-view-${v}`);
+    if (el) el.style.display = (v === viewName) ? "block" : "none";
+    if (btn) {
+      if (v === viewName) btn.classList.add("active");
+      else btn.classList.remove("active");
+    }
+  });
+
+  if (viewName === "comandas") renderComandas();
+  if (viewName === "reports") renderReports();
+  if (viewName === "admin") renderAdminProducts();
 }
 
-function filterCategory(catId, btnElement) {
- document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
- if (btnElement) btnElement.classList.add('active');
+function filterCategory(cat, btn) {
+  document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
 
- const blocks = {
- 'crepas-waffles': document.getElementById('sec-crepas-waffles'),
- 'frappes': document.getElementById('sec-frappes'),
- 'fresas-crema': document.getElementById('sec-fresas-crema'),
- 'otros': document.getElementById('sec-otros')
- };
-
- if (catId === 'todos') {
- Object.values(blocks).forEach(b => { if(b) b.style.display = 'block'; });
- } else {
- Object.keys(blocks).forEach(key => {
- if(blocks[key]) blocks[key].style.display = (key === catId) ? 'block' : 'none';
- });
- }
+  const blocks = ["crepas-waffles", "frappes", "fresas-crema", "otros"];
+  blocks.forEach(b => {
+    const el = document.getElementById(`sec-${b}`);
+    if (cat === "todos") {
+      el.style.display = "block";
+    } else {
+      el.style.display = (b === cat) ? "block" : "none";
+    }
+  });
 }
+// ==========================================
+// 4. RENDERIZADO DEL MENÚ Y PERSONALIZACIÓN
+// ==========================================
 
 function renderMenu() {
- renderCategory('crepas-waffles', MENU.crepasWaffles);
- renderCategory('frappes', MENU.frappes);
- renderCategory('fresas-crema', MENU.fresasCrema);
- renderCategory('otros', MENU.otros);
+  const categories = {
+    "crepas-waffles": MENU.crepasWaffles || [],
+    "frappes": MENU.frappes || [],
+    "fresas-crema": MENU.fresasCrema || [],
+    "otros": MENU.otros || []
+  };
+
+  for (const [key, products] of Object.entries(categories)) {
+    const container = document.getElementById(key);
+    if (!container) continue;
+    container.innerHTML = "";
+
+    products.forEach(prod => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.onclick = () => handleProductClick(prod);
+
+      card.innerHTML = `
+        <img src="${prod.img || 'https://via.placeholder.com/150'}" alt="${prod.name}">
+        <div class="product-info">
+          <h4>${prod.name}</h4>
+          <span class="price">$${parseFloat(prod.price).toFixed(2)}</span>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
 }
 
-function renderCategory(containerId, items) {
- const container = document.getElementById(containerId);
- if (!container) return;
- container.innerHTML = '';
-
- items.forEach(item => {
- const card = document.createElement('div');
- card.className = 'product-card';
- card.onclick = () => handleProductClick(item);
- card.innerHTML = `
- <img src="${item.img}" alt="${item.nombre}">
- <h3>${item.nombre}</h3>
- <p class="price">$${item.precio.toFixed(2)}</p>
- `;
- container.appendChild(card);
- });
+function handleProductClick(product) {
+  if (product.customizable && product.options) {
+    openCustomModal(product);
+  } else {
+    addToCart(product);
+  }
 }
 
-function handleProductClick(item) {
- if (item.customizable) openCustomModal(item);
- else addToCart(item);
-}
+function openCustomModal(product) {
+  pendingCustomItem = JSON.parse(JSON.stringify(product));
+  document.getElementById("custom-title").innerText = product.name;
+  document.getElementById("custom-sub").innerText = "Selecciona tus opciones / ingredientes:";
 
-// PERSONALIZACIÓN Y CARRITO
-function openCustomModal(item) {
- pendingCustomProduct = item;
- const modal = document.getElementById('custom-modal');
- const container = document.getElementById('custom-options-container');
+  const container = document.getElementById("custom-options-container");
+  container.innerHTML = "";
 
- document.getElementById('custom-title').innerText = `Personalizar: ${item.nombre}`;
- container.innerHTML = '';
+  product.options.forEach((opt, idx) => {
+    const label = document.createElement("label");
+    label.style.display = "block";
+    label.style.padding = "6px 0";
+    label.style.fontSize = "0.9rem";
+    
+    label.innerHTML = `
+      <input type="checkbox" value="${opt}" id="opt-${idx}"> ${opt}
+    `;
+    container.appendChild(label);
+  });
 
- if (item.customizable === 'dulce') {
- document.getElementById('custom-sub').innerText = 'Selecciona hasta 4 ingredientes:';
- for (let group in OPTIONS_DULCES) {
- const gTitle = document.createElement('h4');
- gTitle.style.cssText = 'color:var(--primary); margin:6px 0 2px 0; font-size:0.8rem;';
- gTitle.innerText = group;
- container.appendChild(gTitle);
-
- OPTIONS_DULCES[group].forEach(opt => {
- const label = document.createElement('label');
- label.style.cssText = 'display:block; font-size:0.8rem; margin-bottom:4px;';
- label.innerHTML = `<input type="checkbox" name="cust-opt" value="${opt}" onchange="checkMaxSelect(event, 4)"> ${opt}`;
- container.appendChild(label);
- });
- }
- } else if (item.customizable === 'fresas') {
- const max = item.maxToppings || 3;
- document.getElementById('custom-sub').innerText = `Selecciona hasta ${max} Toppings:`;
- TOPPINGS_FRESAS.forEach(opt => {
- const label = document.createElement('label');
- label.style.cssText = 'display:block; font-size:0.8rem; margin-bottom:4px;';
- label.innerHTML = `<input type="checkbox" name="cust-opt" value="${opt}" onchange="checkMaxSelect(event, ${max})"> ${opt}`;
- container.appendChild(label);
- });
- }
-
- modal.style.display = 'flex';
-}
-
-function checkMaxSelect(event, max) {
- const selected = document.querySelectorAll('input[name="cust-opt"]:checked');
- if (selected.length > max) {
- alert(`Límite máximo de ${max} opciones.`);
- event.target.checked = false;
- }
-}
-
-function confirmCustomItem() {
- const selected = Array.from(document.querySelectorAll('input[name="cust-opt"]:checked')).map(cb => cb.value);
- const details = selected.length > 0 ? ` (${selected.join(', ')})` : '';
-
- addToCart({
- ...pendingCustomProduct,
- nombre: `${pendingCustomProduct.nombre}${details}`,
- cartId: Date.now()
- });
- closeCustomModal();
+  document.getElementById("custom-modal").style.display = "flex";
 }
 
 function closeCustomModal() {
- document.getElementById('custom-modal').style.display = 'none';
- pendingCustomProduct = null;
+  pendingCustomItem = null;
+  document.getElementById("custom-modal").style.display = "none";
 }
 
-function addToCart(item) {
- currentCart.push({ ...item, cartId: Date.now() });
- updateCartUI();
+function confirmCustomItem() {
+  if (!pendingCustomItem) return;
+
+  const selectedOpts = [];
+  const container = document.getElementById("custom-options-container");
+  const checkboxes = container.querySelectorAll("input[type='checkbox']:checked");
+  
+  checkboxes.forEach(cb => selectedOpts.push(cb.value));
+
+  let finalName = pendingCustomItem.name;
+  if (selectedOpts.length > 0) {
+    finalName += ` (${selectedOpts.join(", ")})`;
+  }
+
+  const itemToAdd = {
+    ...pendingCustomItem,
+    name: finalName,
+    uniqueId: Date.now()
+  };
+
+  addToCart(itemToAdd);
+  closeCustomModal();
+}
+
+// ==========================================
+// 5. GESTIÓN DEL CARRITO Y PAGOS
+// ==========================================
+
+function addToCart(product) {
+  const existing = cart.find(i => i.id === product.id && i.name === product.name);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ ...product, qty: 1 });
+  }
+  updateCartUI();
 }
 
 function updateCartUI() {
- const total = currentCart.reduce((sum, item) => sum + item.precio, 0);
- document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
- document.getElementById('cart-count').innerText = currentCart.length;
+  const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+  const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+  document.getElementById("cart-count").innerText = totalCount;
+  document.getElementById("cart-total").innerText = `$${totalPrice.toFixed(2)}`;
+  document.getElementById("modal-cart-total").innerText = `$${totalPrice.toFixed(2)}`;
+
+  const cartList = document.getElementById("cart-items-list");
+  if (!cartList) return;
+  cartList.innerHTML = "";
+
+  cart.forEach((item, index) => {
+    const div = document.createElement("div");
+    div.className = "cart-item-row";
+    div.style.display = "flex";
+    div.style.justifyContent = "space-between";
+    div.style.alignItems = "center";
+    div.style.padding = "8px 0";
+    div.style.borderBottom = "1px solid #eee";
+
+    div.innerHTML = `
+      <div style="flex:1;">
+        <strong style="font-size:0.85rem;">${item.name}</strong><br>
+        <small>$${parseFloat(item.price).toFixed(2)} x ${item.qty} = $${(item.price * item.qty).toFixed(2)}</small>
+      </div>
+      <div style="display:flex; gap:5px; align-items:center;">
+        <button onclick="changeQty(${index}, -1)" class="btn-secondary" style="padding:2px 8px;">-</button>
+        <span>${item.qty}</span>
+        <button onclick="changeQty(${index}, 1)" class="btn-secondary" style="padding:2px 8px;">+</button>
+      </div>
+    `;
+    cartList.appendChild(div);
+  });
+}
+
+function changeQty(index, change) {
+  if (cart[index]) {
+    cart[index].qty += change;
+    if (cart[index].qty <= 0) {
+      cart.splice(index, 1);
+    }
+  }
+  updateCartUI();
 }
 
 function toggleCartModal() {
- const modal = document.getElementById('cart-modal');
- const list = document.getElementById('cart-items-list');
-
- if (modal.style.display === 'flex') {
- modal.style.display = 'none';
- } else {
- modal.style.display = 'flex';
- list.innerHTML = '';
- if (currentCart.length === 0) {
- list.innerHTML = '<p style="text-align:center; color:#888;">El carrito está vacío</p>';
- } else {
- currentCart.forEach((item, idx) => {
- const row = document.createElement('div');
- row.style.cssText = 'display:flex; justify-content:space-between; margin-bottom:6px; font-size:0.85rem;';
- row.innerHTML = `<span>${item.nombre} - $${item.precio.toFixed(2)}</span> <button onclick="removeItem(${idx})" style="border:none; background:red; color:white; border-radius:4px; padding:2px 6px;">❌</button>`;
- list.appendChild(row);
- });
- }
- const total = currentCart.reduce((sum, item) => sum + item.precio, 0);
- document.getElementById('modal-cart-total').innerText = `$${total.toFixed(2)}`;
- }
+  const modal = document.getElementById("cart-modal");
+  modal.style.display = (modal.style.display === "flex") ? "none" : "flex";
 }
 
-function removeItem(index) {
- currentCart.splice(index, 1);
- updateCartUI();
- toggleCartModal();
- toggleCartModal();
-}
-// PAGO Y TICKET
 function openPayModal() {
- if (currentCart.length === 0) return alert('El carrito está vacío.');
- toggleCartModal();
- const total = currentCart.reduce((sum, item) => sum + item.precio, 0);
- document.getElementById('pay-total-display').value = `$${total.toFixed(2)}`;
- document.getElementById('pay-amount').value = '';
- document.getElementById('pay-change').value = '$0.00';
- setPaymentMethod('efectivo');
- document.getElementById('pay-modal').style.display = 'flex';
+  if (cart.length === 0) {
+    alert("El carrito está vacío");
+    return;
+  }
+  document.getElementById("cart-modal").style.display = "none";
+  
+  const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+  document.getElementById("pay-total-display").value = `$${total.toFixed(2)}`;
+  document.getElementById("pay-amount").value = total;
+  
+  setPaymentMethod("efectivo");
+  calculateChange();
+  document.getElementById("pay-modal").style.display = "flex";
 }
 
 function closePayModal() {
- document.getElementById('pay-modal').style.display = 'none';
+  document.getElementById("pay-modal").style.display = "none";
 }
 
 function setPaymentMethod(method) {
- selectedPaymentMethod = method;
- document.getElementById('btn-pay-cash').classList.toggle('active', method === 'efectivo');
- document.getElementById('btn-pay-card').classList.toggle('active', method === 'tarjeta');
- document.getElementById('cash-calculator').style.display = (method === 'efectivo') ? 'block' : 'none';
+  currentPayMethod = method;
+  document.getElementById("btn-pay-cash").classList.toggle("active", method === "efectivo");
+  document.getElementById("btn-pay-card").classList.toggle("active", method === "tarjeta");
+
+  const cashCalc = document.getElementById("cash-calculator");
+  if (method === "tarjeta") {
+    cashCalc.style.display = "none";
+  } else {
+    cashCalc.style.display = "block";
+  }
 }
 
 function calculateChange() {
- const total = currentCart.reduce((sum, item) => sum + item.precio, 0);
- const amount = parseFloat(document.getElementById('pay-amount').value) || 0;
- const change = amount - total;
- document.getElementById('pay-change').value = `$${(change >= 0 ? change : 0).toFixed(2)}`;
+  const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+  const payVal = parseFloat(document.getElementById("pay-amount").value) || 0;
+  const change = payVal - total;
+
+  document.getElementById("pay-change").value = change >= 0 ? `$${change.toFixed(2)}` : "$0.00";
 }
 
 function processPayment() {
- const total = currentCart.reduce((sum, item) => sum + item.precio, 0);
- let paidAmount = total;
+  const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+  const payVal = parseFloat(document.getElementById("pay-amount").value) || 0;
 
- if (selectedPaymentMethod === 'efectivo') {
- paidAmount = parseFloat(document.getElementById('pay-amount').value) || 0;
- if (paidAmount < total) return alert('Monto insuficiente.');
- }
+  if (currentPayMethod === "efectivo" && payVal < total) {
+    alert("El monto pagado es menor al total de la venta.");
+    return;
+  }
 
- lastSale = {
- id: Date.now().toString().slice(-4),
- date: new Date().toLocaleDateString(),
- time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
- total: total,
- method: selectedPaymentMethod,
- paidWith: paidAmount,
- change: paidAmount - total,
- items: [...currentCart]
- };
+  const saleData = {
+    id: "TICK-" + Date.now().toString().slice(-6),
+    date: new Date().toLocaleString(),
+    items: [...cart],
+    total: total,
+    method: currentPayMethod,
+    paidWith: currentPayMethod === "efectivo" ? payVal : total,
+    change: currentPayMethod === "efectivo" ? (payVal - total) : 0
+  };
 
- salesHistory.push(lastSale);
- localStorage.setItem('pos_sales', JSON.stringify(salesHistory));
+  salesHistory.push(saleData);
+  localStorage.setItem("pos_sales", JSON.stringify(salesHistory));
 
- guardarPedido(currentCart, total);
- closePayModal();
- showTicketModal();
- updateReportsUI();
+  pendingOrders.push({ ...saleData, status: "pendiente" });
+  localStorage.setItem("pos_orders", JSON.stringify(pendingOrders));
+
+  closePayModal();
+  showReceiptModal(saleData);
 }
 
-function showTicketModal() {
- document.getElementById('ticket-date').innerText = `${lastSale.date} - ${lastSale.time}`;
- document.getElementById('ticket-method').innerText = `PAGO: ${lastSale.method.toUpperCase()} | FOLIO: #${lastSale.id}`;
+// ==========================================
+// 6. TICKET, PDF Y EXTERNOS
+// ==========================================
 
- document.getElementById('ticket-items').innerHTML = lastSale.items.map(i => `
- <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:4px;">
- <span>${i.nombre}</span>
- <strong>$${i.precio.toFixed(2)}</strong>
- </div>
- `).join('');
+let lastSale = null;
 
- document.getElementById('ticket-totals').innerHTML = `
- <div>Subtotal: $${lastSale.total.toFixed(2)}</div>
- <div>Pagó con: $${lastSale.paidWith.toFixed(2)}</div>
- <div style="font-size:1rem; color:var(--primary); font-weight:bold; margin-top:4px;">Cambio: $${lastSale.change.toFixed(2)}</div>
- `;
+function showReceiptModal(sale) {
+  lastSale = sale;
+  document.getElementById("ticket-date").innerText = sale.date;
+  document.getElementById("ticket-method").innerText = `PAGO: ${sale.method.toUpperCase()}`;
 
- document.getElementById('receipt-modal').style.display = 'flex';
-}
+  const itemsDiv = document.getElementById("ticket-items");
+  itemsDiv.innerHTML = "";
 
-function descargarPDF() {
- const el = document.getElementById('printable-ticket');
- const opciones = {
- margin: 3,
- filename: `Ticket_${lastSale.id}.pdf`,
- image: { type: 'jpeg', quality: 0.98 },
- html2canvas: { scale: 2 },
- jsPDF: { unit: 'mm', format: [80, 140], orientation: 'portrait' }
- };
- html2pdf().set(opciones).from(el).save();
-}
+  sale.items.forEach(i => {
+    const row = document.createElement("div");
+    row.style.display = "flex";
+    row.style.justifyContent = "space-between";
+    row.style.fontSize = "0.8rem";
+    row.style.marginBottom = "4px";
+    row.innerHTML = `
+      <span>${i.qty}x ${i.name}</span>
+      <span>$${(i.price * i.qty).toFixed(2)}</span>
+    `;
+    itemsDiv.appendChild(row);
+  });
 
-async function compartirPDFWhatsApp() {
- const el = document.getElementById('printable-ticket');
- const opciones = {
- margin: 3,
- filename: `Ticket_${lastSale.id}.pdf`,
- image: { type: 'jpeg', quality: 0.98 },
- html2canvas: { scale: 2 },
- jsPDF: { unit: 'mm', format: [80, 140], orientation: 'portrait' }
- };
+  const totalsDiv = document.getElementById("ticket-totals");
+  totalsDiv.innerHTML = `
+    <p style="margin:2px 0;"><strong>TOTAL: $${sale.total.toFixed(2)}</strong></p>
+    ${sale.method === "efectivo" ? `
+      <p style="margin:2px 0; font-size:0.75rem;">Recibido: $${sale.paidWith.toFixed(2)}</p>
+      <p style="margin:2px 0; font-size:0.75rem;">Cambio: $${sale.change.toFixed(2)}</p>
+    ` : ""}
+  `;
 
- try {
- const pdfWorker = html2pdf().set(opciones).from(el);
- const pdfBlob = await pdfWorker.output('blob');
- const file = new File([pdfBlob], `Ticket_${lastSale.id}.pdf`, { type: 'application/pdf' });
-
- if (navigator.canShare && navigator.canShare({ files: [file] })) {
- await navigator.share({ files: [file], title: `Ticket #${lastSale.id}`, text: 'Tu ticket de Crepas Miin 🥞' });
- } else {
- descargarPDF();
- alert('El PDF se guardó. Adjúntalo en WhatsApp.');
- }
- } catch (err) {
- descargarPDF();
- }
-}
-
-function imprimirRawBT() {
- let text = ` CREPAS MIIN\nFecha: ${lastSale.date} ${lastSale.time}\nFolio: #${lastSale.id}\n--------------------------------\n`;
- lastSale.items.forEach(i => { text += `${i.nombre}\n $${i.precio.toFixed(2)}\n`; });
- text += `--------------------------------\nTOTAL: $${lastSale.total.toFixed(2)}\n\n`;
- window.location.href = `intent:${encodeURIComponent(text)}#Intent;scheme=rawbt;package=ru.a4040.rawbt;end;`;
+  document.getElementById("receipt-modal").style.display = "flex";
 }
 
 function finishSale() {
- document.getElementById('receipt-modal').style.display = 'none';
- currentCart = [];
- updateCartUI();
+  cart = [];
+  updateCartUI();
+  document.getElementById("receipt-modal").style.display = "none";
+  switchView("menu");
 }
 
-// COMANDAS Y REPORTE
-function guardarPedido(carrito, total) {
- pedidos.push({
- id: Date.now(),
- folio: pedidos.length + 1,
- items: carrito,
- total: total,
- estado: 'pendiente',
- fecha: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
- });
- localStorage.setItem('pos_pedidos', JSON.stringify(pedidos));
- renderizarComandas();
+function imprimirRawBT() {
+  if (!lastSale) return;
+  let text = `🍓 CREPAS MIIN 🍓\n`;
+  text += `Fecha: ${lastSale.date}\n`;
+  text += `Método: ${lastSale.method.toUpperCase()}\n`;
+  text += `--------------------------------\n`;
+  lastSale.items.forEach(i => {
+    text += `${i.qty}x ${i.name} = $${(i.price * i.qty).toFixed(2)}\n`;
+  });
+  text += `--------------------------------\n`;
+  text += `TOTAL: $${lastSale.total.toFixed(2)}\n\n`;
+  text += `¡Gracias por tu compra!\n\n\n`;
+
+  const intentUrl = "intent:#Intent;scheme=rawbt;package=ru.is целесообразно.rawbt;S.content=" + encodeURIComponent(text) + ";end";
+  window.location.href = intentUrl;
 }
 
-function marcarComoCompletado(id) {
- pedidos = pedidos.map(p => p.id === id ? { ...p, estado: 'completado' } : p);
- localStorage.setItem('pos_pedidos', JSON.stringify(pedidos));
- renderizarComandas();
+function descargarPDF() {
+  const element = document.getElementById("printable-ticket");
+  const opt = {
+    margin:       0.2,
+    filename:     `ticket-${lastSale ? lastSale.id : 'sale'}.pdf`,
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2 },
+    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+  };
+  html2pdf().set(opt).from(element).save();
 }
 
-function renderizarComandas() {
- const cont = document.getElementById('lista-comandas');
- if (!cont) return;
- cont.innerHTML = '';
- const pend = pedidos.filter(p => p.estado === 'pendiente');
+function compartirPDFWhatsApp() {
+  if (!lastSale) return;
+  let text = `*🍓 TICKET DE COMPRA - CREPAS MIIN 🍓*\n`;
+  text += `📅 Fecha: ${lastSale.date}\n`;
+  text += `💳 Pago: ${lastSale.method.toUpperCase()}\n`;
+  text += `----------------------------------\n`;
+  lastSale.items.forEach(i => {
+    text += `• ${i.qty}x ${i.name} - *$${(i.price * i.qty).toFixed(2)}*\n`;
+  });
+  text += `----------------------------------\n`;
+  text += `*TOTAL A PAGAR: $${lastSale.total.toFixed(2)}*\n\n`;
+  text += `¡Gracias por tu preferencia! ✨`;
 
- if (pend.length === 0) {
- cont.innerHTML = '<p style="text-align:center; color:#888;">Sin comandas pendientes 🥞</p>';
- return;
- }
-
- pend.forEach(p => {
- const card = document.createElement('div');
- card.className = 'comanda-card';
- card.innerHTML = `
- <h3>Pedido #${p.folio} <small>(${p.fecha})</small></h3>
- <ul style="margin:8px 0; padding-left:18px; font-size:0.85rem;">
- ${p.items.map(i => `<li>${i.nombre}</li>`).join('')}
- </ul>
- <button onclick="marcarComoCompletado(${p.id})" class="btn-primary">✅ Completar</button>
- `;
- cont.appendChild(card);
- });
+  const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+  window.open(waUrl, '_blank');
 }
 
-function updateReportsUI() {
- const todayStr = new Date().toLocaleDateString();
- const todaySales = salesHistory.filter(s => s.date === todayStr);
+// ==========================================
+// 7. COMANDAS Y CAJA (REPORTES)
+// ==========================================
 
- let cash = 0, card = 0;
- todaySales.forEach(s => {
- if (s.method === 'efectivo') cash += s.total;
- else card += s.total;
- });
+function renderComandas() {
+  const container = document.getElementById("lista-comandas");
+  if (!container) return;
+  container.innerHTML = "";
 
- document.getElementById('stat-initial-box').innerText = `$${(boxData.initial || 0).toFixed(2)}`;
- document.getElementById('stat-cash-total').innerText = `$${cash.toFixed(2)}`;
- document.getElementById('stat-card-total').innerText = `$${card.toFixed(2)}`;
- document.getElementById('stat-grand-total').innerText = `$${(cash + card + (boxData.initial || 0)).toFixed(2)}`;
+  if (pendingOrders.length === 0) {
+    container.innerHTML = "<p style='color:#666;'>No hay pedidos pendientes en cocina.</p>";
+    return;
+  }
+
+  pendingOrders.forEach((ord, index) => {
+    const card = document.createElement("div");
+    card.className = "comanda-card";
+    card.style.background = "white";
+    card.style.padding = "12px";
+    card.style.borderRadius = "8px";
+    card.style.marginBottom = "10px";
+    card.style.borderLeft = "5px solid var(--primary)";
+
+    let itemsHtml = "";
+    ord.items.forEach(i => {
+      itemsHtml += `<li><strong>${i.qty}x</strong> ${i.name}</li>`;
+    });
+
+    card.innerHTML = `
+      <div style="display:flex; justify-size:space-between; align-items:center;">
+        <h4 style="margin:0;">Orden #${ord.id}</h4>
+        <small>${ord.date.split(" ")[1] || ""}</small>
+      </div>
+      <ul style="margin:8px 0; padding-left:20px; font-size:0.9rem;">${itemsHtml}</ul>
+      <button onclick="completeOrder(${index})" class="btn-success" style="width:100%; padding:6px;">
+        ✅ Entregar Order
+      </button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function completeOrder(index) {
+  pendingOrders.splice(index, 1);
+  localStorage.setItem("pos_orders", JSON.stringify(pendingOrders));
+  renderComandas();
+}
+
+function renderReports() {
+  const cashTotal = salesHistory
+    .filter(s => s.method === "efectivo")
+    .reduce((sum, s) => sum + s.total, 0);
+
+  const cardTotal = salesHistory
+    .filter(s => s.method === "tarjeta")
+    .reduce((sum, s) => sum + s.total, 0);
+
+  const grandTotal = initialBoxAmount + cashTotal + cardTotal;
+
+  document.getElementById("stat-initial-box").innerText = `$${initialBoxAmount.toFixed(2)}`;
+  document.getElementById("stat-cash-total").innerText = `$${cashTotal.toFixed(2)}`;
+  document.getElementById("stat-card-total").innerText = `$${cardTotal.toFixed(2)}`;
+  document.getElementById("stat-grand-total").innerText = `$${grandTotal.toFixed(2)}`;
 }
 
 function closeCashBox() {
- if (!confirm('¿Cerrar caja?')) return;
- boxData = { open: false, initial: 0 };
- localStorage.setItem('pos_box_session', JSON.stringify(boxData));
- location.reload();
+  if (confirm("¿Estás seguro de realizar el cierre de caja? Esto reiniciará el historial del día.")) {
+    salesHistory = [];
+    initialBoxAmount = 0;
+    localStorage.removeItem("pos_sales");
+    localStorage.removeItem("pos_initial_box");
+    localStorage.setItem("pos_box_open", "false");
+    alert("Caja cerrada exitosamente.");
+    location.reload();
+  }
 }
 
 // ==========================================
-// FUNCIONES DE ADMINISTRACIÓN Y GALERÍA DE FOTOS
+// 8. MÓDULO DE ADMINISTRACIÓN (CRUD Y BASE64)
 // ==========================================
 
-function renderAdminProducts() {
- const container = document.getElementById('admin-products-list');
- if (!container) return;
- container.innerHTML = '';
-
- const categories = [
- { key: 'crepasWaffles', title: 'Crepas & Waffles' },
- { key: 'frappes', title: 'Frappés' },
- { key: 'fresasCrema', title: 'Fresas con Crema' },
- { key: 'otros', title: 'Snacks & Bebidas' }
- ];
-
- categories.forEach(cat => {
- const items = MENU[cat.key] || [];
- if (items.length > 0) {
- const header = document.createElement('h5');
- header.style.cssText = 'color:var(--primary); margin-top:10px; font-size:0.9rem; font-weight:bold;';
- header.innerText = cat.title;
- container.appendChild(header);
-
- items.forEach((prod, index) => {
- const itemRow = document.createElement('div');
- itemRow.style.cssText = 'background:white; padding:8px 12px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; box-shadow:0 1px 3px rgba(0,0,0,0.05); margin-bottom:5px;';
- itemRow.innerHTML = `
- <div style="display:flex; align-items:center; gap:10px;">
- <img src="${prod.img}" style="width:35px; height:35px; border-radius:6px; object-fit:cover;" onerror="this.src='https://via.placeholder.com/35?text=Sin+Img'">
- <div>
- <strong>${prod.nombre}</strong> - $${prod.precio.toFixed(2)}
- </div>
- </div>
- <div style="display:flex; gap:6px;">
- <button onclick="editAdminProduct('${cat.key}', ${index})" style="background:#ffc107; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">✏️</button>
- <button onclick="deleteAdminProduct('${cat.key}', ${index})" style="background:#dc3545; color:white; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">🗑️</button>
- </div>
- `;
- container.appendChild(itemRow);
- });
- }
- });
-}
+let adminBase64Image = "";
 
 function convertImageToBase64() {
- const fileInput = document.getElementById('prod-file');
- if (fileInput && fileInput.files && fileInput.files[0]) {
- const file = fileInput.files[0];
- const reader = new FileReader();
- reader.onloadend = function() {
- document.getElementById('prod-img').value = reader.result;
- };
- reader.readAsDataURL(file);
- }
+  const fileInput = document.getElementById("prod-file");
+  const file = fileInput.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      adminBase64Image = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
 }
 
 function saveAdminProduct() {
- const cat = document.getElementById('prod-category').value;
- const name = document.getElementById('prod-name').value.trim();
- const price = parseFloat(document.getElementById('prod-price').value);
- const img = document.getElementById('prod-img').value.trim();
- const editId = document.getElementById('prod-edit-id').value;
+  const editId = document.getElementById("prod-edit-id").value;
+  const category = document.getElementById("prod-category").value;
+  const name = document.getElementById("prod-name").value.trim();
+  const price = parseFloat(document.getElementById("prod-price").value);
+  const imgUrl = document.getElementById("prod-img").value.trim();
 
- if (!name || isNaN(price) || !img) {
- return alert('Por favor llena todos los campos (nombre, precio e imagen).');
- }
+  if (!name || isNaN(price)) {
+    alert("Por favor completa el nombre y un precio válido.");
+    return;
+  }
 
- if (editId !== '') {
- // Modo Edición
- const [editCat, indexStr] = editId.split('-');
- const index = parseInt(indexStr);
+  let finalImg = adminBase64Image || imgUrl || "https://via.placeholder.com/150";
 
- if (editCat !== cat) {
- MENU[editCat].splice(index, 1);
- if (!MENU[cat]) MENU[cat] = [];
- MENU[cat].push({ id: `p_${Date.now()}`, nombre: name, precio: price, img: img });
- } else {
- MENU[cat][index] = { ...MENU[cat][index], nombre: name, precio: price, img: img };
- }
- } else {
- // Modo Nuevo
- if (!MENU[cat]) MENU[cat] = [];
- MENU[cat].push({
- id: `p_${Date.now()}`,
- nombre: name,
- precio: price,
- img: img
- });
- }
+  if (!MENU[category]) {
+    MENU[category] = [];
+  }
 
- localStorage.setItem('pos_custom_menu', JSON.stringify(MENU));
- renderMenu();
- renderAdminProducts();
- resetAdminForm();
- alert('¡Producto guardado con éxito!');
+  if (editId) {
+    // Modo Edición
+    for (const catKey in MENU) {
+      const idx = MENU[catKey].findIndex(p => p.id === editId);
+      if (idx !== -1) {
+        if (!adminBase64Image && !imgUrl) {
+          finalImg = MENU[catKey][idx].img;
+        }
+        MENU[catKey].splice(idx, 1);
+        break;
+      }
+    }
+    MENU[category].push({ id: editId, name, price, img: finalImg });
+    alert("Producto actualizado correctamente.");
+  } else {
+    // Modo Nuevo Producto
+    const newProd = {
+      id: "prod-" + Date.now(),
+      name,
+      price,
+      img: finalImg
+    };
+    MENU[category].push(newProd);
+    alert("Producto guardado exitosamente.");
+  }
+
+  localStorage.setItem("pos_menu_v2", JSON.stringify(MENU));
+  resetAdminForm();
+  renderAdminProducts();
+  renderMenu();
 }
 
-function editAdminProduct(catKey, index) {
- const prod = MENU[catKey][index];
- document.getElementById('prod-category').value = catKey;
- document.getElementById('prod-name').value = prod.nombre;
- document.getElementById('prod-price').value = prod.precio;
- document.getElementById('prod-img').value = prod.img;
- document.getElementById('prod-edit-id').value = `${catKey}-${index}`;
+function renderAdminProducts() {
+  const container = document.getElementById("admin-products-list");
+  if (!container) return;
+  container.innerHTML = "";
 
- document.getElementById('admin-form-title').innerText = '✏️ Editar Producto';
- document.getElementById('btn-cancel-edit').style.display = 'inline-block';
+  for (const [catKey, products] of Object.entries(MENU)) {
+    products.forEach(p => {
+      const item = document.createElement("div");
+      item.style.display = "flex";
+      item.style.alignItems = "center";
+      item.style.justifyContent = "space-between";
+      item.style.background = "white";
+      item.style.padding = "8px 12px";
+      item.style.borderRadius = "8px";
+      item.style.boxShadow = "0 1px 3px rgba(0,0,0,0.1)";
+
+      item.innerHTML = `
+        <div style="display:flex; align-items:center; gap:10px;">
+          <img src="${p.img}" style="width:40px; height:40px; object-fit:cover; border-radius:6px;">
+          <div>
+            <strong style="font-size:0.85rem;">${p.name}</strong><br>
+            <small style="color:#666;">$${parseFloat(p.price).toFixed(2)} - [${catKey}]</small>
+          </div>
+        </div>
+        <div>
+          <button onclick="editAdminProduct('${p.id}', '${catKey}')" class="btn-secondary" style="padding:4px 8px; font-size:0.8rem;">✏️</button>
+          <button onclick="deleteAdminProduct('${p.id}')" class="btn-danger" style="padding:4px 8px; font-size:0.8rem;">🗑️</button>
+        </div>
+      `;
+      container.appendChild(item);
+    });
+  }
 }
 
-function deleteAdminProduct(catKey, index) {
- if (!confirm(`¿Seguro que deseas eliminar "${MENU[catKey][index].nombre}"?`)) return;
+function editAdminProduct(id, category) {
+  const prod = MENU[category].find(p => p.id === id);
+  if (!prod) return;
 
- MENU[catKey].splice(index, 1);
- localStorage.setItem('pos_custom_menu', JSON.stringify(MENU));
- renderMenu();
- renderAdminProducts();
+  document.getElementById("prod-edit-id").value = prod.id;
+  document.getElementById("prod-category").value = category;
+  document.getElementById("prod-name").value = prod.name;
+  document.getElementById("prod-price").value = prod.price;
+  document.getElementById("prod-img").value = prod.img.startsWith("data:") ? "" : prod.img;
+
+  document.getElementById("admin-form-title").innerText = "✏️ Editar Producto";
+  document.getElementById("btn-cancel-edit").style.display = "inline-block";
+}
+
+function deleteAdminProduct(id) {
+  if (confirm("¿Seguro que deseas eliminar este producto?")) {
+    for (const catKey in MENU) {
+      MENU[catKey] = MENU[catKey].filter(p => p.id !== id);
+    }
+    localStorage.setItem("pos_menu_v2", JSON.stringify(MENU));
+    renderAdminProducts();
+    renderMenu();
+  }
 }
 
 function resetAdminForm() {
- document.getElementById('prod-category').value = 'crepasWaffles';
- document.getElementById('prod-name').value = '';
- document.getElementById('prod-price').value = '';
- document.getElementById('prod-img').value = '';
- document.getElementById('prod-edit-id').value = '';
+  document.getElementById("prod-edit-id").value = "";
+  document.getElementById("prod-name").value = "";
+  document.getElementById("prod-price").value = "";
+  document.getElementById("prod-img").value = "";
+  document.getElementById("prod-file").value = "";
+  adminBase64Image = "";
 
- const fileInput = document.getElementById('prod-file');
- if (fileInput) fileInput.value = '';
-
- document.getElementById('admin-form-title').innerText = '➕ Agregar Nuevo Producto';
- document.getElementById('btn-cancel-edit').style.display = 'none';
+  document.getElementById("admin-form-title").innerText = "➕ Agregar Nuevo Producto";
+  document.getElementById("btn-cancel-edit").style.display = "none";
 }
