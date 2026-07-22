@@ -2,268 +2,237 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Crepas POS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POS - Crepas Miin</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
-  <div id="welcome-screen" class="full-screen-modal">
-    <div class="card-box text-center">
-      <img src="logo.png" class="welcome-logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3132/3132693.png'">
-      <h1 style="color:var(--primary); margin:10px 0;">¡Bienvenidos!</h1>
-      <p style="color:#666; font-size:0.9rem; margin-bottom:20px;">Punto de Venta - Crepas & Frappés</p>
-      <button class="btn-pink style-btn" onclick="showAuthScreen()">Iniciar Sistema 🚀</button>
+  <!-- PANTALLA DE BIENVENIDA CON TU LOGO LOCAL -->
+  <div id="welcome-screen" class="full-screen-overlay">
+    <div class="welcome-card">
+      <img src="logo.png" alt="Crepas Miin Logo" class="welcome-logo">
+      <h2>¡Bienvenidos!</h2>
+      <p>Punto de Venta - CREPAS MIIN</p>
+      <button onclick="showAuthScreen('login')" class="btn-primary">Iniciar Sistema 🍓</button>
     </div>
   </div>
 
-  <div id="auth-screen" class="full-screen-modal" style="display:none;">
-    <div class="card-box">
-      <h2 style="color:var(--primary); text-align:center; margin-bottom:10px;">Acceso al Sistema</h2>
-      <form onsubmit="handleAuth(event)">
-        <div class="modal-field">
-          <label>Correo Electrónico</label>
-          <input type="email" id="auth-email" placeholder="ejemplo@correo.com" required>
-        </div>
-        <div class="modal-field">
-          <label>Contraseña</label>
-          <input type="password" id="auth-password" placeholder="******" required>
-        </div>
-        <div class="modal-field">
-          <label>Tipo de Cuenta</label>
-          <select id="auth-role">
-            <option value="owner">Dueño / Administrador</option>
-            <option value="employee">Empleado (Solo Ventas)</option>
-          </select>
-        </div>
-        <div style="display:flex; flex-direction:column; gap:10px; margin-top:15px;">
-          <button type="submit" class="btn-pink style-btn">🔑 Iniciar Sesión</button>
-          <button type="button" class="btn-pink style-btn" style="background:#28a745;" onclick="registerAccountDirectly()">📝 Crear Cuenta / Registrar</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <div id="open-box-modal" class="full-screen-modal" style="display:none;">
-    <div class="card-box text-center">
-      <h2 style="color:var(--primary);">💵 Apertura de Caja</h2>
-      <p style="font-size:0.85rem; color:#666; margin:10px 0;">Ingresa el dinero inicial en caja (fondo para cambio):</p>
-      <div class="modal-field">
-        <input type="number" id="initial-box-amount" placeholder="Ej: 500" value="0" style="text-align:center; font-size:1.2rem; font-weight:bold;">
+  <!-- PANTALLA DE AUTENTICACIÓN (LOGIN Y REGISTRO POR CORREO) -->
+  <div id="auth-screen" class="full-screen-overlay" style="display:none;">
+    <div class="auth-card">
+      <!-- FORMULARIO DE INICIO DE SESIÓN -->
+      <div id="login-box">
+        <h2>Iniciar Sesión</h2>
+        <form onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label>Correo Electrónico:</label>
+            <input type="email" id="login-email" class="form-control" placeholder="correo@ejemplo.com" required>
+          </div>
+          <div class="form-group">
+            <label>Contraseña:</label>
+            <input type="password" id="login-pass" class="form-control" placeholder="••••••••" required>
+          </div>
+          <div class="form-group">
+            <label>Rol de Usuario:</label>
+            <select id="login-role" class="form-control">
+              <option value="owner">Dueño / Admin</option>
+              <option value="employee">Empleado / Cajero</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-primary" style="margin-top:10px;">Ingresar</button>
+        </form>
+        <p class="auth-switch">¿No tienes cuenta? <a href="#" onclick="toggleAuthMode('register')">Regístrate aquí</a></p>
       </div>
-      <button class="btn-pink style-btn" style="background:#28a745; margin-top:10px;" onclick="confirmOpenBox()">Abrir Caja y Comenzar Turno 🚀</button>
+
+      <!-- FORMULARIO DE REGISTRO -->
+      <div id="register-box" style="display:none;">
+        <h2>Crear Cuenta</h2>
+        <form onsubmit="handleRegister(event)">
+          <div class="form-group">
+            <label>Nombre Completo:</label>
+            <input type="text" id="reg-name" class="form-control" placeholder="Tu nombre" required>
+          </div>
+          <div class="form-group">
+            <label>Correo Electrónico:</label>
+            <input type="email" id="reg-email" class="form-control" placeholder="correo@ejemplo.com" required>
+          </div>
+          <div class="form-group">
+            <label>Contraseña:</label>
+            <input type="password" id="reg-pass" class="form-control" placeholder="••••••••" required>
+          </div>
+          <div class="form-group">
+            <label>Rol:</label>
+            <select id="reg-role" class="form-control">
+              <option value="employee">Empleado / Cajero</option>
+              <option value="owner">Dueño / Admin</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-primary" style="margin-top:10px;">Registrarse</button>
+        </form>
+        <p class="auth-switch">¿Ya tienes cuenta? <a href="#" onclick="toggleAuthMode('login')">Inicia Sesión</a></p>
+      </div>
     </div>
   </div>
 
-  <div id="app-main" style="display:none; height:100vh; flex-direction:column;">
+  <!-- MODAL FONDO INICIAL DE CAJA -->
+  <div id="open-box-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h3>Apertura de Caja</h3>
+      <p>Ingresa el monto inicial en efectivo:</p>
+      <input type="number" id="initial-box-amount" class="form-control" placeholder="$0.00" value="0">
+      <button onclick="confirmOpenBox()" class="btn-primary" style="margin-top:15px;">Abrir Caja</button>
+    </div>
+  </div>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <div id="app-main" style="display:none;">
     
-    <header>
-      <div class="header-brand">
-        <img id="nav-logo" src="logo.png" class="header-logo" onerror="this.style.display='none'">
-        <h1>Crepas POS</h1>
-      </div>
-      <div class="header-right">
-        <button class="btn-nav active" id="btn-view-menu" onclick="switchView('menu')">🛍️ Menú</button>
-        <button class="btn-nav" id="btn-view-reports" onclick="switchView('reports')">📊 Caja y Ventas</button>
-        <button class="btn-nav owner-only" id="btn-view-admin" style="display:none;" onclick="switchView('admin')">⚙️ Admin</button>
-        <button class="btn-nav" onclick="logout()">🚪 Salir</button>
-      </div>
+    <!-- BARRA SUPERIOR COMPACTA (ARRIBA Y HORIZONTAL) -->
+    <header class="top-navbar">
+      <div class="nav-brand">🍓 CREPAS MIIN POS</div>
+      <nav class="nav-buttons">
+        <button id="btn-view-menu" class="nav-item active" onclick="switchView('menu')">🛒 Menú</button>
+        <button id="btn-view-comandas" class="nav-item" onclick="switchView('comandas')">🍳 Comandas</button>
+        <button id="btn-view-reports" class="nav-item" onclick="switchView('reports')">📊 Caja</button>
+        <button id="btn-view-admin" class="nav-item" onclick="switchView('admin')" style="display:none;">⚙️ Admin</button>
+        <button class="nav-item btn-exit" onclick="logout()">🚪 Salir</button>
+      </nav>
     </header>
 
-    <main id="view-menu" class="view-section active">
-      <div class="menu-layout">
-        <div class="categories">
-          <button class="cat-btn active" onclick="filterCategory('todos', this)">✨ Todos</button>
-          <button class="cat-btn" onclick="filterCategory('crepas-waffles', this)">🥞 Crepas & Waffles</button>
-          <button class="cat-btn" onclick="filterCategory('frappes', this)">🥤 Frappés</button>
-          <button class="cat-btn" onclick="filterCategory('fresas-crema', this)">🍓 Fresas c/ Crema</button>
-          <button class="cat-btn" onclick="filterCategory('otros', this)">🍿 Snacks & Bebidas</button>
-        </div>
+    <!-- MENÚ -->
+    <main id="view-menu" class="view-section">
+      <div class="category-bar">
+        <button class="cat-btn active" onclick="filterCategory('todos', this)">Todos</button>
+        <button class="cat-btn" onclick="filterCategory('crepas-waffles', this)">Crepas & Waffles</button>
+        <button class="cat-btn" onclick="filterCategory('frappes', this)">Frappés</button>
+        <button class="cat-btn" onclick="filterCategory('fresas-crema', this)">Fresas c/ Crema</button>
+        <button class="cat-btn" onclick="filterCategory('otros', this)">Snacks & Bebidas</button>
+      </div>
 
-        <div id="sec-crepas-waffles" class="category-block">
-          <h2 class="cat-title">🥞 Crepas & Waffles</h2>
-          <div class="products-grid" id="crepas-waffles"></div>
-        </div>
+      <div id="sec-crepas-waffles" class="menu-block">
+        <h3 class="section-title">Crepas & Waffles</h3>
+        <div id="crepas-waffles" class="products-grid"></div>
+      </div>
 
-        <div id="sec-frappes" class="category-block">
-          <h2 class="cat-title">🥤 Frappés</h2>
-          <div class="products-grid" id="frappes"></div>
-        </div>
+      <div id="sec-frappes" class="menu-block">
+        <h3 class="section-title">Frappés</h3>
+        <div id="frappes" class="products-grid"></div>
+      </div>
 
-        <div id="sec-fresas-crema" class="category-block">
-          <h2 class="cat-title">🍓 Fresas con Crema</h2>
-          <div class="products-grid" id="fresas-crema"></div>
-        </div>
+      <div id="sec-fresas-crema" class="menu-block">
+        <h3 class="section-title">Fresas con Crema</h3>
+        <div id="fresas-crema" class="products-grid"></div>
+      </div>
 
-        <div id="sec-otros" class="category-block">
-          <h2 class="cat-title">🍿 Snacks & Bebidas</h2>
-          <div class="products-grid" id="otros"></div>
-        </div>
+      <div id="sec-otros" class="menu-block">
+        <h3 class="section-title">Snacks & Bebidas</h3>
+        <div id="otros" class="products-grid"></div>
+      </div>
 
-        <div class="cart-bar">
-          <div>
-            <div style="font-size: 0.85rem; color: #666;">Items: <strong id="cart-count">0</strong></div>
-            <div style="font-size: 1.2rem; font-weight: 800; color: var(--primary);" id="cart-total">$0.00</div>
-          </div>
-          <button class="btn-pink" onclick="toggleCartModal()">🛒 Ver Orden / Cobrar</button>
-        </div>
+      <div id="floating-cart" onclick="toggleCartModal()">
+        🛒 Ver Orden ( <span id="cart-count">0</span> ) - <span id="cart-total">$0.00</span>
       </div>
     </main>
 
-    <main id="view-reports" class="view-section" style="display:none; padding:15px; padding-bottom:90px;">
-      <h2 style="color: var(--primary); margin-bottom: 15px;">📊 Resumen de Caja y Ventas</h2>
-      
-      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:10px; margin-bottom:20px;">
-        <div class="card-box text-center">
-          <span style="font-size:0.75rem; color:#666;">Fondo Inicial</span>
-          <h3 id="stat-initial-box" style="color:#007bff; margin-top:4px;">$0.00</h3>
-        </div>
-        <div class="card-box text-center">
-          <span style="font-size:0.75rem; color:#666;">Ventas Efectivo</span>
-          <h3 id="stat-cash-total" style="color:#28a745; margin-top:4px;">$0.00</h3>
-        </div>
-        <div class="card-box text-center">
-          <span style="font-size:0.75rem; color:#666;">Ventas Tarjeta</span>
-          <h3 id="stat-card-total" style="color:#6f42c1; margin-top:4px;">$0.00</h3>
-        </div>
-        <div class="card-box text-center">
-          <span style="font-size:0.75rem; color:#666;">Total Acumulado</span>
-          <h3 id="stat-grand-total" style="color:var(--primary); margin-top:4px;">$0.00</h3>
-        </div>
-      </div>
-
-      <button class="btn-pink style-btn" style="background:#dc3545; width:100%; margin-bottom:20px;" onclick="closeCashBox()">🔒 Hacer Cierre de Caja / Reiniciar Turno</button>
-
-      <h3 style="color:#333; margin-bottom:10px;">📋 Historial de Transacciones</h3>
-      <div id="sales-history-list" style="display:flex; flex-direction:column; gap:8px;"></div>
+    <!-- COMANDAS -->
+    <main id="view-comandas" class="view-section" style="display:none;">
+      <h2 class="section-title">🍳 Pedidos Pendientes (Cocina)</h2>
+      <div id="lista-comandas" class="comandas-grid"></div>
     </main>
 
-    <main id="view-admin" class="view-section" style="display:none; padding:15px; padding-bottom:90px;">
-      <h2 style="color: var(--primary); margin-bottom: 15px;">⚙️ Administrar Productos</h2>
-      <div class="card-box" style="text-align:left; margin-bottom:20px;">
-        <h3 id="admin-form-title">➕ Agregar Nuevo Producto</h3>
-        <input type="hidden" id="admin-prod-id">
-        <div class="modal-field"><label>Nombre</label><input type="text" id="admin-prod-name"></div>
-        <div class="modal-field">
-          <label>Categoría</label>
-          <select id="admin-prod-cat">
-            <option value="crepasWaffles">Crepas & Waffles</option>
-            <option value="frappes">Frappés</option>
-            <option value="fresasCrema">Fresas con Crema</option>
-            <option value="otros">Snacks & Bebidas</option>
-          </select>
-        </div>
-        <div class="modal-field"><label>Precio ($)</label><input type="number" id="admin-prod-price"></div>
-        <div class="modal-field">
-          <label>Foto (Galería)</label>
-          <input type="file" id="admin-prod-file" accept="image/*" onchange="convertImageToBase64(event)">
-          <input type="hidden" id="admin-prod-img64">
-        </div>
-        <div style="display:flex; gap:8px; margin-top:10px;">
-          <button class="btn-pink style-btn" style="flex:1;" onclick="saveCustomProduct()">💾 Guardar</button>
-          <button class="btn-pink style-btn" id="btn-cancel-edit" style="flex:1; background:#6c757d; display:none;" onclick="resetAdminForm()">Cancelar</button>
-        </div>
+    <!-- CAJA -->
+    <main id="view-reports" class="view-section" style="display:none;">
+      <h2 class="section-title">📊 Resumen de Caja</h2>
+      <div class="stats-grid">
+        <div class="stat-card"><small>Inicial</small><h3 id="stat-initial-box">$0.00</h3></div>
+        <div class="stat-card"><small>Efectivo</small><h3 id="stat-cash-total">$0.00</h3></div>
+        <div class="stat-card"><small>Tarjeta</small><h3 id="stat-card-total">$0.00</h3></div>
+        <div class="stat-card highlight"><small>Total</small><h3 id="stat-grand-total">$0.00</h3></div>
       </div>
-      <h3>📦 Productos en Catálogo</h3>
-      <div id="admin-products-list" style="display:flex; flex-direction:column; gap:8px; margin-top:10px;"></div>
+      <button onclick="closeCashBox()" class="btn-danger" style="margin-top:15px;">🔒 Cierre de Caja</button>
+    </main>
+
+    <!-- ADMIN -->
+    <main id="view-admin" class="view-section" style="display:none;">
+      <h2 class="section-title">⚙️ Administración</h2>
+      <p>Módulo de edición de productos disponible para Dueño.</p>
     </main>
 
   </div>
 
-  <div id="pay-modal" class="full-screen-modal" style="display:none;">
-    <div class="card-box" style="max-width:400px; width:90%;">
-      <h3 style="color:var(--primary); text-align:center;">Cobrar Pedido</h3>
-      
-      <div class="modal-field" style="margin-top:10px;">
-        <label>Forma de Pago</label>
-        <div style="display:flex; gap:10px;">
-          <button type="button" class="btn-pink style-btn" id="btn-pay-cash" style="flex:1;" onclick="setPaymentMethod('efectivo')">💵 Efectivo</button>
-          <button type="button" class="btn-pink style-btn" id="btn-pay-card" style="flex:1; background:#6c757d;" onclick="setPaymentMethod('tarjeta')">💳 Tarjeta</button>
-        </div>
+  <!-- MODALES DE PROCESO (CARRITO, PAGO, TICKET Y PERSONALIZACIÓN) -->
+  <div id="cart-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h3>🛒 Tu Pedido</h3>
+      <div id="cart-items-list" class="cart-list"></div>
+      <h4 style="text-align:right; margin-top:10px;">Total: <span id="modal-cart-total">$0.00</span></h4>
+      <div class="modal-actions">
+        <button onclick="toggleCartModal()" class="btn-secondary">Cerrar</button>
+        <button onclick="openPayModal()" class="btn-primary">Cobrar</button>
       </div>
+    </div>
+  </div>
 
-      <div class="modal-field">
-        <label>Total a Pagar</label>
-        <input type="text" id="pay-total-display" readonly style="font-weight:bold; background:#f0f0f0;">
+  <div id="pay-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h3>Cobrar Pedido</h3>
+      <div class="payment-methods">
+        <button id="btn-pay-cash" onclick="setPaymentMethod('efectivo')" class="pay-btn active">💵 Efectivo</button>
+        <button id="btn-pay-card" onclick="setPaymentMethod('tarjeta')" class="pay-btn">💳 Tarjeta</button>
       </div>
-
+      <div class="form-group">
+        <label>Total:</label>
+        <input type="text" id="pay-total-display" readonly class="form-control">
+      </div>
       <div id="cash-calculator">
-        <div class="modal-field">
-          <label>Paga con ($)</label>
-          <input type="number" id="pay-amount" placeholder="0.00" oninput="calculateChange()">
+        <div class="form-group">
+          <label>Paga con ($):</label>
+          <input type="number" id="pay-amount" oninput="calculateChange()" class="form-control">
         </div>
-        <div class="modal-field">
-          <label>Cambio ($)</label>
-          <input type="text" id="pay-change" readonly style="font-weight:bold; color:var(--accent-green); background:#f0f0f0;">
+        <div class="form-group">
+          <label>Cambio ($):</label>
+          <input type="text" id="pay-change" readonly class="form-control change-input">
         </div>
       </div>
-
-      <div class="modal-actions" style="display:flex; gap:10px; margin-top:15px;">
-        <button class="btn-pink style-btn" style="background:#28a745; flex:1;" onclick="processPayment()">Confirmar y Ticket</button>
-        <button class="btn-pink style-btn" style="background:#6c757d; flex:1;" onclick="closePayModal()">Cancelar</button>
+      <div class="modal-actions">
+        <button onclick="closePayModal()" class="btn-secondary">Cancelar</button>
+        <button onclick="processPayment()" class="btn-success">Confirmar Venta</button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL TICKET E IMPRESIÓN / VISTA PREVIA -->
-  <div id="receipt-modal" class="full-screen-modal" style="display:none;">
-    <div class="card-box" style="max-width:360px; width:92%;">
-      
-      <!-- TICKET DIGITAL TIPO TÉRMICO -->
-      <div id="printable-ticket" style="background:#fff8fa; border:2px dashed #e91e63; padding:15px; border-radius:12px; font-family: monospace; text-align:center;">
-        <h3 style="margin:0; color:#d63384; font-size:1.1rem;">🧾 CREPAS & FRAPPÉS</h3>
-        <p style="font-size:0.75rem; color:#555; margin:3px 0;" id="ticket-date"></p>
-        <p style="font-size:0.75rem; font-weight:bold; color:#333; margin-bottom:8px;" id="ticket-method"></p>
-        
-        <div style="border-top:1px dashed #aaa; border-bottom:1px dashed #aaa; padding:8px 0; margin:8px 0; text-align:left;" id="ticket-items"></div>
-        
-        <div style="text-align:right; font-size:0.85rem;" id="ticket-totals"></div>
-        
-        <div style="text-align:center; margin-top:10px; font-size:0.75rem; color:#888;">
-          ¡Gracias por tu compra! ❤️<br>
-          <span style="font-size:0.65rem;">Conserva este ticket digital</span>
+  <div id="receipt-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <div id="printable-ticket" class="ticket-box">
+        <div style="text-align:center;">
+          <h3 style="margin:0; color:var(--primary);">🍓 CREPAS MIIN</h3>
+          <p id="ticket-date" style="margin:2px 0; font-size:0.75rem;"></p>
+          <p id="ticket-method" style="margin:2px 0; font-size:0.75rem; font-weight:bold;"></p>
         </div>
+        <hr style="border:none; border-top:1px dashed #ccc; margin:8px 0;">
+        <div id="ticket-items"></div>
+        <hr style="border:none; border-top:1px dashed #ccc; margin:8px 0;">
+        <div id="ticket-totals" style="text-align:right;"></div>
       </div>
-
-      <!-- BOTONES DE ACCIÓN -->
-      <div style="display:flex; flex-direction:column; gap:8px; margin-top:15px;">
-        <button class="btn-pink style-btn" style="background:#25d366; color:white;" onclick="copyTicketText()">
-          📲 Copiar Ticket para WhatsApp
-        </button>
-        <button class="btn-pink style-btn" style="background:#28a745;" onclick="finishSale()">
-          ✅ Concluir y Nueva Venta
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-
-  
-
-  <div id="custom-modal" class="full-screen-modal" style="display:none;">
-    <div class="card-box" style="max-width:450px; width:90%; max-height:85vh; overflow-y:auto;">
-      <h3 id="custom-title" style="color:var(--primary); text-align:center;">Personalizar</h3>
-      <p id="custom-sub" style="font-size:0.8rem; color:#666; text-align:center; margin-bottom:10px;"></p>
-      <div id="custom-options-container"></div>
-      <div style="display:flex; gap:10px; margin-top:15px;">
-        <button class="btn-pink style-btn" style="flex:1;" onclick="confirmCustomItem()">Añadir</button>
-        <button class="btn-pink style-btn" style="background:#6c757d; flex:1;" onclick="closeCustomModal()">Cancelar</button>
+      <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px;">
+        <button onclick="imprimirRawBT()" class="btn-action btn-blue">🖨️ Imprimir (RawBT)</button>
+        <button onclick="descargarPDF()" class="btn-action btn-red">📄 Descargar PDF</button>
+        <button onclick="compartirPDFWhatsApp()" class="btn-action btn-green">📲 Compartir WhatsApp</button>
+        <button onclick="finishSale()" class="btn-action btn-gray">✅ Siguiente Venta</button>
       </div>
     </div>
   </div>
 
-  <div id="cart-modal" class="full-screen-modal" style="display:none;">
-    <div class="card-box" style="max-width:400px; width:90%;">
-      <h2>🛒 Detalle de la Orden</h2>
-      <div id="cart-items-list" style="max-height:220px; overflow-y:auto; margin:10px 0; border-top:1px solid #eee; border-bottom:1px solid #eee; padding:10px 0;"></div>
-      <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:1.1rem; margin-bottom:15px;">
-        <span>Total:</span>
-        <span id="modal-cart-total" style="color:var(--primary);">$0.00</span>
-      </div>
-      <div style="display:flex; gap:10px;">
-        <button class="btn-pink style-btn" style="background:#28a745; flex:1;" onclick="openPayModal()">💳 Pasar a Cobrar</button>
-        <button class="btn-pink style-btn" style="background:#6c757d; flex:1;" onclick="toggleCartModal()">Cerrar</button>
+  <div id="custom-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h3 id="custom-title">Personalizar</h3>
+      <p id="custom-sub" style="font-size:0.8rem; color:#666;"></p>
+      <div id="custom-options-container" style="max-height:200px; overflow-y:auto; margin:10px 0;"></div>
+      <div class="modal-actions">
+        <button onclick="closeCustomModal()" class="btn-secondary">Cancelar</button>
+        <button onclick="confirmCustomItem()" class="btn-primary">Agregar</button>
       </div>
     </div>
   </div>
